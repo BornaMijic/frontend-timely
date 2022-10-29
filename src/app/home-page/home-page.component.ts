@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import {WorkSessionService} from "./work-session.service";
 
 @Component({
@@ -14,6 +14,10 @@ export class HomePageComponent {
   startCounting() {
     this.start = true;
     this.workSessionService.setStartCounting(new Date());
+  }
+
+  stopCounting() {
+
   }
 
 }
