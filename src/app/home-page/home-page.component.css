@@ -1,0 +1,13 @@
+.margin-top {
+  margin-top: 30px;
+}
+
+.center-block {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.button-size{
+  padding: 10px 10%;
+}
