@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject, throwError} from "rxjs";
 import {WorkSession} from "./work-session.model";
 import {HttpClient} from "@angular/common/http";
+import {DataStorageService} from "../shared/data-storage.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +14,10 @@ export class WorkSessionService {
   workSessions: WorkSession[] =  [];
   workSessionsSubject: Subject<WorkSession[]> = new Subject<WorkSession[]>();
 
-  constructor(private http: HttpClient) { }
+  constructor(private dataStorageService: DataStorageService) { }
 
   getWorkSessions(): Observable<WorkSession[]> {
-    return this.http.get<WorkSession[]>("http://localhost:8080/work-session")
+    return this.dataStorageService.getWorkSessions();
   }
 
   setStartCounting(startDate: Date | null) {
@@ -27,9 +28,27 @@ export class WorkSessionService {
     }
   }
 
-  addWorkSessions(name: string, endDate: Date) {
+  addWorkSessions(name: string, endDate: Date): Observable<WorkSession> {
     if(this.countingStart != null) {
       let workSession: WorkSession = new WorkSession(name, this.countingStart, endDate);
+      return this.dataStorageService.addWorkSession(workSession);
+    }
+    return throwError(() => new Error("Error occurred"));
+    /*
+    if(this.countingStart != null) {
+      let workSession: WorkSession = new WorkSession(name, this.countingStart, endDate);
+      this.countingStart = null;
+      this.countingStartSubject = new Subject<Date>();
+      this.countingStateSubject.next(false);
+      this.workSessions.push(workSession);
+      console.log(this.workSessions)
+      this.workSessionsSubject.next(this.workSessions);
+
+    }*/
+  }
+
+  addWorkSessionsIfSuccess(workSession: WorkSession) {
+    if(this.countingStart != null) {
       this.countingStart = null;
       this.countingStartSubject = new Subject<Date>();
       this.countingStateSubject.next(false);

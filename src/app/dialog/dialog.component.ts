@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialogRef} from "@angular/material/dialog";
 import {WorkSessionService} from "../home-page/work-session.service";
+import {WorkSession} from "../home-page/work-session.model";
 
 @Component({
   selector: 'app-dialog',
@@ -13,7 +14,16 @@ export class DialogComponent{
 
 
   addProject(name: string) {
-    this.workSessionService.addWorkSessions(name, new Date());
+    this.workSessionService.addWorkSessions(name, new Date()).subscribe(
+      {
+        next: (workSession: WorkSession) => {
+          this.workSessionService.addWorkSessionsIfSuccess(workSession);
+        },
+        error: () => {
+
+        }
+      }
+    );
     this.dialog.close();
   }
 
