@@ -11,6 +11,8 @@ import {WorkSessionService} from "../home-page/work-session.service";
 export class WorkSessionsListComponent implements OnInit, OnDestroy {
   workSessions: WorkSession[] = []
   coutingStart: Date | null = null;
+  edit: boolean = false;
+  selectedWorkSessionForEdit: string = "";
   readonly DATE_FORMAT: string = 'dd-MM-yyyy hh:mm';
   private subscription: Subscription = new Subscription()
 
@@ -71,6 +73,22 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
 
        this.subscription.add(subscription);
     }
+  }
+
+  setForEdit(id: string | undefined) {
+    if(id) {
+      this.edit = true;
+      this.selectedWorkSessionForEdit = id;
+    }
+  }
+
+  closeEdit() {
+    this.edit = false;
+    this.selectedWorkSessionForEdit = "";
+  }
+
+  updateWorkSession() {
+    
   }
 
 }

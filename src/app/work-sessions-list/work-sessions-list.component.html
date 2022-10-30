@@ -1,6 +1,6 @@
 <div class="container margin-top" *ngIf="workSessions.length > 0">
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 scroll-view">
       <table class="table table-secondary">
         <thead>
           <th>Project name</th>
@@ -12,17 +12,34 @@
         </thead>
         <tbody>
           <tr *ngFor="let workSession of workSessions">
-            <td>{{workSession.name}}</td>
-            <td>{{workSession.startDate | date: DATE_FORMAT}}</td>
-            <td>{{workSession.endDate | date: DATE_FORMAT}}</td>
+              <td  *ngIf="selectedWorkSessionForEdit != workSession.id">{{workSession.name}}</td>
+              <td  *ngIf="selectedWorkSessionForEdit != workSession.id">{{workSession.startDate | date: DATE_FORMAT}}</td>
+              <td  *ngIf="selectedWorkSessionForEdit != workSession.id">{{workSession.endDate | date: DATE_FORMAT}}</td>
+              <td *ngIf="edit == true && selectedWorkSessionForEdit == workSession.id"><input type="text" [value]="workSession.name"/></td>
+              <td *ngIf="edit == true && selectedWorkSessionForEdit == workSession.id"><input type="datetime-local"/></td>
+              <td *ngIf="edit == true && selectedWorkSessionForEdit == workSession.id"><input type="datetime-local"/></td>
             <td>{{getDuration(workSession.endDate,workSession.startDate)}}</td>
-            <td>
-              <button class="btn btn-warning">
+
+            <td *ngIf="selectedWorkSessionForEdit != workSession.id">
+              <button [disabled]="edit == true && selectedWorkSessionForEdit != workSession.id" class="btn btn-warning" (click)="setForEdit(workSession.id)">
                 EDIT
               </button>
             </td>
+            <td *ngIf="edit == true && selectedWorkSessionForEdit == workSession.id">
+                <button [disabled]="edit == true && selectedWorkSessionForEdit != workSession.id" class="btn btn-success" (click)="updateWorkSession(workSession.id)">
+                  UPDATE
+                </button>
+            </td>
+            <td *ngIf="edit == true && selectedWorkSessionForEdit == workSession.id">
+                <button [disabled]="edit == true && selectedWorkSessionForEdit != workSession.id" class="btn btn-danger" (click)="closeEdit()">
+                  CLOSE
+                </button>
+            </td>
+            <td *ngIf="edit == true && selectedWorkSessionForEdit != workSession.id">
+              &nbsp;
+            </td>
             <td>
-              <button class="btn btn-danger" (click)="deleteWorkSession(workSession?.id)">
+              <button [disabled]="edit == true" class="btn btn-danger" (click)="deleteWorkSession(workSession?.id)">
                 X
               </button>
             </td>
@@ -36,7 +53,7 @@
               &nbsp;
             </td>
             <td>
-              <button class="btn btn-danger" (click)="deleteCurrentWorkSession()">
+              <button class="btn btn-danger" [disabled]="edit == true" (click)="deleteCurrentWorkSession()">
                 X
               </button>
             </td>
