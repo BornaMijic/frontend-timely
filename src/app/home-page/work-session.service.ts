@@ -53,4 +53,10 @@ export class WorkSessionService {
 
     }
   }
+
+  stopCountingAndDelete(date: null) {
+    this.countingStartSubject.next(null);
+    this.countingStart = null;
+    this.countingStateSubject.next(false)
+  }
 }

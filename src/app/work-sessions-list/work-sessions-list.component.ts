@@ -51,4 +51,8 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
     return hours + ":" + minutes + ":" + seconds;
   }
 
+  deleteCurrentWorkSession() {
+    this.workSessionService.stopCountingAndDelete(null);
+  }
+
 }
