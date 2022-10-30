@@ -1,3 +1,10 @@
+<div class="container">
+  <div class="row">
+    <div *ngIf="error" class="col-12 alert alert-danger margin-top">
+      <p class="text-center">{{ error }}</p>
+    </div>
+  </div>
+</div>
 <div class="container margin-top" *ngIf="workSessions.length > 0">
   <div class="row">
     <div class="col-12 scroll-view">
@@ -12,48 +19,114 @@
         </thead>
         <tbody>
           <tr *ngFor="let workSession of workSessions">
-              <td  *ngIf="selectedWorkSessionForEdit != workSession.id">{{workSession.name}}</td>
-              <td  *ngIf="selectedWorkSessionForEdit != workSession.id">{{workSession.startDate | date: DATE_FORMAT}}</td>
-              <td  *ngIf="selectedWorkSessionForEdit != workSession.id">{{workSession.endDate | date: DATE_FORMAT}}</td>
-              <td *ngIf="edit == true && selectedWorkSessionForEdit == workSession.id"><input type="text" [value]="workSession.name"/></td>
-              <td *ngIf="edit == true && selectedWorkSessionForEdit == workSession.id"><input type="datetime-local"/></td>
-              <td *ngIf="edit == true && selectedWorkSessionForEdit == workSession.id"><input type="datetime-local"/></td>
-            <td>{{getDuration(workSession.endDate,workSession.startDate)}}</td>
+            <td *ngIf="selectedWorkSessionForEdit != workSession.id">
+              {{ workSession.name }}
+            </td>
+            <td *ngIf="selectedWorkSessionForEdit != workSession.id">
+              {{ workSession.startDate | date: DATE_FORMAT }}
+            </td>
+            <td *ngIf="selectedWorkSessionForEdit != workSession.id">
+              {{ workSession.endDate | date: DATE_FORMAT }}
+            </td>
+            <td
+              *ngIf="
+                edit == true && selectedWorkSessionForEdit == workSession.id
+              "
+            >
+              <input
+                type="text"
+                [value]="workSession.name"
+                [(ngModel)]="name"
+              />
+            </td>
+            <td
+              *ngIf="
+                edit == true && selectedWorkSessionForEdit == workSession.id
+              "
+            >
+              <input type="datetime-local" [(ngModel)]="startDate" step="1" />
+            </td>
+            <td
+              *ngIf="
+                edit == true && selectedWorkSessionForEdit == workSession.id
+              "
+            >
+              <input type="datetime-local" [(ngModel)]="endDate" step="1" />
+            </td>
+            <td>
+              {{ getDuration(workSession.endDate, workSession.startDate) }}
+            </td>
 
             <td *ngIf="selectedWorkSessionForEdit != workSession.id">
-              <button [disabled]="edit == true && selectedWorkSessionForEdit != workSession.id" class="btn btn-warning" (click)="setForEdit(workSession.id)">
+              <button
+                [disabled]="
+                  edit == true && selectedWorkSessionForEdit != workSession.id
+                "
+                class="btn btn-warning"
+                (click)="setForEdit(workSession)"
+              >
                 EDIT
               </button>
             </td>
-            <td *ngIf="edit == true && selectedWorkSessionForEdit == workSession.id">
-                <button [disabled]="edit == true && selectedWorkSessionForEdit != workSession.id" class="btn btn-success" (click)="updateWorkSession(workSession.id)">
-                  UPDATE
-                </button>
+            <td
+              *ngIf="
+                edit == true && selectedWorkSessionForEdit == workSession.id
+              "
+            >
+              <button
+                [disabled]="
+                  edit == true && selectedWorkSessionForEdit != workSession.id
+                "
+                class="btn btn-success"
+                (click)="updateWorkSession(workSession.id)"
+              >
+                UPDATE
+              </button>
             </td>
-            <td *ngIf="edit == true && selectedWorkSessionForEdit == workSession.id">
-                <button [disabled]="edit == true && selectedWorkSessionForEdit != workSession.id" class="btn btn-danger" (click)="closeEdit()">
-                  CLOSE
-                </button>
+            <td
+              *ngIf="
+                edit == true && selectedWorkSessionForEdit == workSession.id
+              "
+            >
+              <button
+                [disabled]="
+                  edit == true && selectedWorkSessionForEdit != workSession.id
+                "
+                class="btn btn-danger"
+                (click)="closeEdit()"
+              >
+                CLOSE
+              </button>
             </td>
-            <td *ngIf="edit == true && selectedWorkSessionForEdit != workSession.id">
+            <td
+              *ngIf="
+                edit == true && selectedWorkSessionForEdit != workSession.id
+              "
+            >
               &nbsp;
             </td>
             <td>
-              <button [disabled]="edit == true" class="btn btn-danger" (click)="deleteWorkSession(workSession?.id)">
+              <button
+                [disabled]="edit == true"
+                class="btn btn-danger"
+                (click)="deleteWorkSession(workSession?.id)"
+              >
                 X
               </button>
             </td>
           </tr>
           <tr *ngIf="coutingStart">
             <td>...</td>
-            <td>{{coutingStart| date: DATE_FORMAT}}</td>
+            <td>{{ coutingStart | date: DATE_FORMAT }}</td>
             <td>...</td>
             <td>...</td>
+            <td>&nbsp;</td>
             <td>
-              &nbsp;
-            </td>
-            <td>
-              <button class="btn btn-danger" [disabled]="edit == true" (click)="deleteCurrentWorkSession()">
+              <button
+                class="btn btn-danger"
+                [disabled]="edit == true"
+                (click)="deleteCurrentWorkSession()"
+              >
                 X
               </button>
             </td>

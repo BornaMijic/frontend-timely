@@ -1,10 +1,20 @@
 <div class="container">
   <div class="row">
     <div class="col-12">
-      <button class="btn btn-secondary center-block button-size margin-top" type="button" (click)="startCounting()" *ngIf="!startState">
+      <button
+        class="btn btn-secondary center-block button-size margin-top"
+        type="button"
+        (click)="startCounting()"
+        *ngIf="!startState"
+      >
         Start
       </button>
-      <button class="btn btn-secondary center-block button-size margin-top" type="button" (click)="stopCounting()" *ngIf="startState">
+      <button
+        class="btn btn-secondary center-block button-size margin-top"
+        type="button"
+        (click)="stopCounting()"
+        *ngIf="startState"
+      >
         Stop
       </button>
     </div>
