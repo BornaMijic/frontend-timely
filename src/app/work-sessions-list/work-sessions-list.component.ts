@@ -20,12 +20,13 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
     let subscription = this.workSessionService.getWorkSessions().subscribe(
       (workSessions: WorkSession[]) => {
         this.workSessions = workSessions
+        this.workSessionService.setWorkSessions(this.workSessions)
       })
 
     this.subscription.add(subscription)
 
     subscription = this.workSessionService.countingStartSubject.subscribe(
-      (startDate: Date) => {
+      (startDate: Date | null) => {
         this.coutingStart = startDate;
       }
     )
