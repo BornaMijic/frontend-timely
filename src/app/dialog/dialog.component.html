@@ -1,6 +1,6 @@
 <div>
   <header>
-    <button type="button" class="btn btn-danger float-end">
+    <button type="button" class="btn btn-danger float-end" (click)="closeDialog()">
       X
     </button>
     <h1>Stop Timer</h1>
@@ -15,6 +15,6 @@
     </div>
   </form>
     <footer>
-      <button class="btn btn-primary margin-top center-block button-size" type="button" [disabled]="!projectNameForm.valid" >Stop Timer</button>
+      <button class="btn btn-primary margin-top center-block button-size" type="button" [disabled]="!projectNameForm.valid" (click)="addProject(name.value)" >Stop Timer</button>
     </footer>
 </div>
