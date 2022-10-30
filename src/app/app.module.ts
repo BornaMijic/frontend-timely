@@ -4,21 +4,25 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { DialogComponent } from './dialog/dialog.component';
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
 import {FormsModule} from "@angular/forms";
+import {DialogComponent} from "./dialog/dialog.component";
+import {HttpClientModule} from "@angular/common/http";
+import { WorkSessionsListComponent } from './work-sessions-list/work-sessions-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
-    DialogComponent
+    DialogComponent,
+    WorkSessionsListComponent
   ],
   imports: [
     BrowserModule,
     NoopAnimationsModule,
     MatDialogModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     {

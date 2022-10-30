@@ -1,8 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {WorkSessionService} from "./work-session.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {DialogComponent} from "../dialog/dialog.component";
 import {Subscription} from "rxjs";
+import {WorkSession} from "./work-session.model";
+import {DialogComponent} from "../dialog/dialog.component";
 
 @Component({
   selector: 'app-home-page',
@@ -12,6 +13,7 @@ import {Subscription} from "rxjs";
 export class HomePageComponent implements OnInit, OnDestroy{
   startState: boolean = false;
   private subscription: Subscription = new Subscription()
+  workSessions: WorkSession[] = []
 
   constructor(private workSessionService: WorkSessionService, private matDialog: MatDialog) { }
 

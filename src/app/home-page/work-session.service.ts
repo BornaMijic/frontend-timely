@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {WorkSession} from "./work-session.model";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +13,11 @@ export class WorkSessionService {
   workSessions: WorkSession[] =  [];
   workSessionsSubject: Subject<WorkSession[]> = new Subject<WorkSession[]>();
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  getWorkSessions(): Observable<WorkSession[]> {
+    return this.http.get<WorkSession[]>("http://localhost:8080/work-session")
+  }
 
   setStartCounting(startDate: Date | null) {
     if(startDate != null) {
