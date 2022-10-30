@@ -18,4 +18,8 @@ export class DataStorageService {
   addWorkSession(workSession: WorkSession): Observable<WorkSession> {
     return this.http.post<WorkSession>(`${environment.backendUrl}work-sessions`, workSession);
   }
+
+  deleteWorkSession(id: string): Observable<any> {
+    return this.http.delete<any>(`${environment.backendUrl}work-sessions/${id}`);
+  }
 }

@@ -25,6 +25,14 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
 
     this.subscription.add(subscription)
 
+    subscription = this.workSessionService.workSessionsSubject.subscribe(
+      (workSessions: WorkSession[]) => {
+        this.workSessions = workSessions
+      }
+    )
+
+    this.subscription.add(subscription)
+
     subscription = this.workSessionService.countingStartSubject.subscribe(
       (startDate: Date | null) => {
         this.coutingStart = startDate;
@@ -53,6 +61,16 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
 
   deleteCurrentWorkSession() {
     this.workSessionService.stopCountingAndDelete(null);
+  }
+
+  deleteWorkSession(id: string | undefined) {
+    if(id != undefined) {
+       let subscription = this.workSessionService.deleteWorkSession(id).subscribe(
+        () => this.workSessionService.deleteWorkSessionSuccess(id)
+      );
+
+       this.subscription.add(subscription);
+    }
   }
 
 }

@@ -48,10 +48,20 @@ export class WorkSessionService {
       this.countingStartSubject.next(null);
       this.countingStateSubject.next(false);
       this.workSessions.push(workSession);
-      console.log(this.workSessions)
       this.workSessionsSubject.next(this.workSessions);
 
     }
+  }
+
+  deleteWorkSession(id: string): Observable<any> {
+    return this.dataStorageService.deleteWorkSession(id);
+  }
+
+  deleteWorkSessionSuccess(id: string) {
+    console.log(this.workSessions)
+    this.workSessions = this.workSessions.filter((workSession: WorkSession) => workSession.id != id);
+    console.log(this.workSessions)
+    this.workSessionsSubject.next(this.workSessions);
   }
 
   stopCountingAndDelete(date: null) {
