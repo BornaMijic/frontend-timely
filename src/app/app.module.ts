@@ -6,6 +6,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { DialogComponent } from './dialog/dialog.component';
 import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import {MatDialogModule, MatDialogRef} from "@angular/material/dialog";
   imports: [
     BrowserModule,
     NoopAnimationsModule,
-    MatDialogModule
+    MatDialogModule,
+    FormsModule
   ],
   providers: [
     {

@@ -5,11 +5,16 @@
     </button>
     <h1>Stop Timer</h1>
   </header>
-      <div class="form-group margin-top">
-        <label>Project name</label>
-        <input type="text" class="form-control" placeholder="Project Name" name="name"/>
-      </div>
+  <form #projectNameForm="ngForm">
+    <div class="form-group margin-top">
+      <label>Project name</label>
+      <input type="text" class="form-control" placeholder="Project Name" name="name" required maxlength="50" #name="ngModel" ngModel/>
+    </div>
+    <div *ngIf="name.errors?.['required'] && (!name.pristine || name.touched)">
+      <span class="text-danger">Project name is required</span>
+    </div>
+  </form>
     <footer>
-      <button class="btn btn-primary margin-top center-block button-size" type="button">Stop Timer</button>
+      <button class="btn btn-primary margin-top center-block button-size" type="button" [disabled]="!projectNameForm.valid" >Stop Timer</button>
     </footer>
 </div>
