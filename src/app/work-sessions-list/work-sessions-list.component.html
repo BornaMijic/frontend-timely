@@ -8,8 +8,11 @@
 <div class="container margin-top" *ngIf="workSessions.length > 0">
   <div class="row">
     <div class="col-12 scroll-view">
-      <table class="table table-secondary">
-        <thead>
+      <hr />
+      <table class="table table-striped">
+        <thead class="table-light text-center">
+          <th>#</th>
+
           <th>Project name</th>
           <th>Start</th>
           <th>Stop</th>
@@ -17,8 +20,20 @@
           <th>&nbsp;</th>
           <th>&nbsp;</th>
         </thead>
-        <tbody>
-          <tr *ngFor="let workSession of workSessions | paginate:{itemsPerPage: 5, currentPage: page, totalItems: workSessions.length}; let i = index">
+        <tbody class="text-center">
+          <tr
+            *ngFor="
+              let workSession of workSessions
+                | paginate
+                  : {
+                      itemsPerPage: 5,
+                      currentPage: page,
+                      totalItems: workSessions.length
+                    };
+              let i = index
+            "
+          >
+            <th>{{ i + 1 + (page - 1) * 5 }}</th>
             <td *ngIf="selectedWorkSessionForEdit != workSession.id">
               {{ workSession.name }}
             </td>
@@ -44,14 +59,24 @@
                 edit == true && selectedWorkSessionForEdit == workSession.id
               "
             >
-              <input type="datetime-local" [(ngModel)]="startDate" step="1" />
+              <input
+                type="datetime-local"
+                [ngModel]="startDate | date: 'yyyy-MM-ddTHH:mm'"
+                (ngModelChange)="startDate = $event"
+                step="1"
+              />
             </td>
             <td
               *ngIf="
                 edit == true && selectedWorkSessionForEdit == workSession.id
               "
             >
-              <input type="datetime-local" [(ngModel)]="endDate" step="1" />
+              <input
+                type="datetime-local"
+                [ngModel]="endDate | date: 'yyyy-MM-ddTHH:mm'"
+                (ngModelChange)="endDate = $event"
+                step="1"
+              />
             </td>
             <td>
               {{ getDuration(workSession.endDate, workSession.startDate) }}
@@ -116,6 +141,7 @@
             </td>
           </tr>
           <tr *ngIf="coutingStart">
+            <th>...</th>
             <td>...</td>
             <td>{{ coutingStart | date: DATE_FORMAT }}</td>
             <td>...</td>
@@ -135,12 +161,12 @@
       </table>
       <div class="text-center">
         <pagination-controls
-        previousLabel="Previous"
-        nextLabel="Next"
-        (pageChange)="changePage($event)"
+          previousLabel="Previous"
+          nextLabel="Next"
+          (pageChange)="changePage($event)"
         >
         </pagination-controls>
-        <hr>
+        <hr />
       </div>
     </div>
   </div>

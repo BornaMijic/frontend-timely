@@ -14,8 +14,8 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
   edit: boolean = false;
   selectedWorkSessionForEdit: string = '';
   name: string = '';
-  startDate: string = '';
-  endDate: string = '';
+  startDate: Date = new Date();
+  endDate: Date = new Date();
   error: string = '';
   page: number = 1;
   readonly DATE_FORMAT: string = 'dd-MM-yyyy hh:mm';
@@ -45,9 +45,8 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
       (startDate: Date | null) => {
         this.coutingStart = startDate;
       }
-  );
+    );
     this.subscription.add(subscription);
-
   }
 
   ngOnDestroy(): void {
@@ -74,21 +73,21 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
       this.edit = true;
       this.selectedWorkSessionForEdit = workSession.id;
       this.name = workSession.name;
+      this.startDate = workSession.startDate;
+      this.endDate = workSession.endDate;
     }
   }
 
   closeEdit() {
     this.edit = false;
     this.selectedWorkSessionForEdit = '';
+    this.error = '';
   }
 
   updateWorkSession(id: string | undefined) {
-    if (this.startDate == '' || this.endDate == '') {
-      this.error = 'Start and stop date are not selected';
-      return;
-    }
-
-    if (new Date(this.startDate) > new Date(this.endDate)) {
+    if (
+      new Date(this.startDate.toString()) > new Date(this.endDate.toString())
+    ) {
       this.error = 'Stop date cannot be before start date';
       return;
     }
@@ -96,8 +95,8 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
     if (id) {
       let workSession = new WorkSession(
         this.name,
-        new Date(this.startDate),
-        new Date(this.endDate),
+        this.startDate,
+        this.endDate,
         id
       );
       let subscription = this.workSessionService
@@ -106,8 +105,8 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
           this.error = '';
           this.workSessionService.updateWorkSessionSuccess(workSession);
           this.name = '';
-          this.startDate = '';
-          this.endDate = '';
+          this.startDate = new Date();
+          this.endDate = new Date();
           this.edit = false;
           this.selectedWorkSessionForEdit = '';
         });
