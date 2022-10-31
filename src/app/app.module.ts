@@ -9,13 +9,15 @@ import {FormsModule} from "@angular/forms";
 import {DialogComponent} from "./dialog/dialog.component";
 import {HttpClientModule} from "@angular/common/http";
 import { WorkSessionsListComponent } from './work-sessions-list/work-sessions-list.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomePageComponent,
     DialogComponent,
-    WorkSessionsListComponent
+    WorkSessionsListComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
