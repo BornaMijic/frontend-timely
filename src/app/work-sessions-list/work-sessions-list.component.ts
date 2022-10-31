@@ -17,6 +17,7 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
   startDate: string = '';
   endDate: string = '';
   error: string = '';
+  page: number = 1;
   readonly DATE_FORMAT: string = 'dd-MM-yyyy hh:mm';
   private subscription: Subscription = new Subscription();
 
@@ -44,7 +45,9 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
       (startDate: Date | null) => {
         this.coutingStart = startDate;
       }
-    );
+  );
+    this.subscription.add(subscription);
+
   }
 
   ngOnDestroy(): void {
@@ -134,5 +137,9 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
     } else {
       this.error = 'Error occurred';
     }
+  }
+
+  changePage(event: any) {
+    this.page = event;
   }
 }

@@ -18,7 +18,7 @@
           <th>&nbsp;</th>
         </thead>
         <tbody>
-          <tr *ngFor="let workSession of workSessions">
+          <tr *ngFor="let workSession of workSessions | paginate:{itemsPerPage: 5, currentPage: page, totalItems: workSessions.length}; let i = index">
             <td *ngIf="selectedWorkSessionForEdit != workSession.id">
               {{ workSession.name }}
             </td>
@@ -133,6 +133,15 @@
           </tr>
         </tbody>
       </table>
+      <div class="text-center">
+        <pagination-controls
+        previousLabel="Previous"
+        nextLabel="Next"
+        (pageChange)="changePage($event)"
+        >
+        </pagination-controls>
+        <hr>
+      </div>
     </div>
   </div>
 </div>

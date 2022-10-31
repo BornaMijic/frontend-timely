@@ -10,6 +10,7 @@ import {DialogComponent} from "./dialog/dialog.component";
 import {HttpClientModule} from "@angular/common/http";
 import { WorkSessionsListComponent } from './work-sessions-list/work-sessions-list.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import {NgxPaginationModule} from "ngx-pagination";
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { NavigationComponent } from './navigation/navigation.component';
     NoopAnimationsModule,
     MatDialogModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgxPaginationModule
   ],
   providers: [
     {
