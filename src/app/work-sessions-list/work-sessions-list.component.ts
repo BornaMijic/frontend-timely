@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { WorkSession } from '../home-page/work-session.model';
 import { Subscription } from 'rxjs';
 import { WorkSessionService } from '../home-page/work-session.service';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-work-sessions-list',
@@ -95,8 +96,8 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
     if (id) {
       let workSession = new WorkSession(
         this.name,
-        this.startDate,
-        this.endDate,
+        new Date(new Date(this.startDate).toLocaleString('en', {timeZone: 'Europe/Berlin'})),
+        new Date(new Date(this.endDate).toLocaleString('en', {timeZone: 'Europe/Berlin'})),
         id
       );
       let subscription = this.workSessionService
@@ -140,5 +141,15 @@ export class WorkSessionsListComponent implements OnInit, OnDestroy {
 
   changePage(event: any) {
     this.page = event;
+  }
+
+  export() {
+    let table = document.getElementById("excel-table");
+    const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(table);
+
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,'Sheet1');
+
+    XLSX.writeFile(wb, "work_sessions_excel")
   }
 }
